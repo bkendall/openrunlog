@@ -34,7 +34,7 @@
         </label>
         </div>
     </div>
-    <div class="control-group">
+    <div class="control-group" id="url-wrapper-field-wrapper" {% if not user.public %}style="display:none;"{% end %}>
         <label class="control-label" for="url">Profile URL:</label>
         <div class="controls">
             <div class="input-prepend" id="url-wrapper">
@@ -67,6 +67,14 @@
                 errorElem: '<span></span>',
             },
         });
+    });
+
+    $('input[type="radio"][name="public"]').on('change', function() {
+        if($('input#public_yes').is(':checked')) {
+            $('#url-wrapper-field-wrapper').show();
+        } else {
+            $('#url-wrapper-field-wrapper').hide();
+        }
     });
 </script>
 {% end %}
