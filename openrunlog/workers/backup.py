@@ -14,7 +14,8 @@ pool = futures.ProcessPoolExecutor(max_workers=5)
 daily_key = 'orl.backups.daily'
 onchange_key = 'orl.backups.onchange'
 
-redis = tornadoredis.Client()
+ORL_REDIS_URI = env.environ['REDIS_PORT_6379_TCP_ADDR']
+redis = tornadoredis.Client(host=ORL_REDIS_URI)
 redis.connect()
 
 

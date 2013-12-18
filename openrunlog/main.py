@@ -22,6 +22,9 @@ from base import ErrorHandler
 
 
 config = env.prefix('ORL_')
+if 'db_uri' not in config or config['db_uri'] == '':
+    config['db_uri'] = 'mongodb://' + env.environ['MONGO_PORT_27017_TCP_ADDR'] + '/openrunlog'
+config['ORL_REDIS_URI'] = env.environ['REDIS_PORT_6379_TCP_ADDR']
 print config
 if config['debug'] == 'True':
     config['debug'] = True
@@ -73,7 +76,7 @@ application = web.Application([
 application.config = config
 application.thread_pool = futures.ThreadPoolExecutor(max_workers=3)
 application.tf = tornadotinyfeedback.Client('openrunlog')
-application.redis = tornadoredis.Client()
+application.redis = tornadoredis.Client(host=config['ORL_REDIS_URI'])
 
 application.redis.connect()
 

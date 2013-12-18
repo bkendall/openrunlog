@@ -71,12 +71,15 @@ def export_run(run, redis):
 
 if __name__ == '__main__':
     config = env.prefix('ORL_')
+    if 'db_uri' not in config or config['db_uri'] == '':
+        config['db_uri'] = 'mongodb://' + env.environ['MONGO_PORT_27017_TCP_ADDR'] + '/openrunlog'
     if config['debug'] == 'True':
         config['debug'] = True
     else:
         config['debug'] = False
 
-    r = tornadoredis.Client()
+    config['ORL_REDIS_URI'] = env.environ['REDIS_PORT_6379_TCP_ADDR']
+    r = tornadoredis.Client(host=config['ORL_REDIS_URI'])
     r.connect()
     mongoengine.connect(
             config['db_name'], 

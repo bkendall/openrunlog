@@ -63,6 +63,8 @@ def main():
 
 if __name__ == '__main__':
     config = env.prefix('ORL_')
+    if 'db_uri' not in config or config['db_uri'] == '':
+        config['db_uri'] = 'mongodb://' + env.environ['MONGO_PORT_27017_TCP_ADDR'] + '/openrunlog'
     if config['debug'] == 'True':
         config['debug'] = True
     else:

@@ -30,15 +30,19 @@ def calculate_streaks(user, asyncr):
 
 if __name__ == '__main__':
     config = env.prefix('ORL_')
+    if 'db_uri' not in config or config['db_uri'] == '':
+        config['db_uri'] = 'mongodb://' + env.environ['MONGO_PORT_27017_TCP_ADDR'] + '/openrunlog'
     if config['debug'] == 'True':
         config['debug'] = True
     else:
         config['debug'] = False
+    config['ORL_REDIS_URI'] = env.environ['REDIS_PORT_6379_TCP_ADDR']
+    r = tornadoredis.Client(host=config['ORL_REDIS_URI'])
     mongoengine.connect(
         config['db_name'],
         host=config['db_uri'])
-    r = redis.StrictRedis(host='localhost', port=6379)
-    asyncr = tornadoredis.Client()
+    r = redis.StrictRedis(host=config['ORL_REDIS_URI'], port=6379)
+    asyncr = tornadoredis.Client(host=config['ORL_REDIS_URI'])
     asyncr.connect()
 
     logging.basicConfig(level=logging.INFO)
