@@ -2,7 +2,7 @@
 
 Checkout the `docker` branch of `github.com/bkendall/openrunlog`
 
-## INSTALLING DOCKER ON A MAC [IMPORTANT]
+## Installing Docker on a Mac [IMPORTANT]
 
 Basically, follow the instructions found [here](http://docs.docker.io/en/latest/installation/vagrant/), but before you run `vagrant up`, edit the `Vagrantfile`. Add the line `config.vm.forward_port 11000, 11000` after the line `config.ssh.forward_agent = true`. This enables port forwarding from the vagrant image to your local Mac.
 
@@ -17,7 +17,19 @@ This means these instructions boil down to:
 
 You then have an environment set up with `docker` and you can continue with the instructions.
 
-## Setting Up Images
+## Setting Up Images [Makefile]
+
+The following set of commands will get you up and running with Docker using your local repository as the source for the server running. This means any changes you make locally are seen by the `orl-server` image and the server updates appropriately.
+
+    sudo make docker-all
+    sudo create-all
+
+Once you've created the image once, you will not need to re-create them. You can then use the following to start/stop the server containers:
+
+    sudo make start-all
+    sudo make stop-all
+
+## Setting Up Images [Manually]
 
 At this point, you should have `docker` available to you. Congrats.
 

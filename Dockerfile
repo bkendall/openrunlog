@@ -12,13 +12,13 @@ RUN curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 RUN python get-pip.py
 
 # openrunlog
-RUN mkdir /openrunlog
+RUN mkdir /orl-tmp
 
 # do pip stuff here to prevent annoying re-install
-ADD requirements.txt /openrunlog/requirements.txt
-RUN pip install -r /openrunlog/requirements.txt
+ADD requirements.txt /orl-tmp/requirements.txt
+RUN pip install -r /orl-tmp/requirements.txt
 
-ADD . /openrunlog
+VOLUME ["/openrunlog"]
 WORKDIR /openrunlog
 
 ENV ORL_DB_NAME openrunlog
