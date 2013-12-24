@@ -22,7 +22,7 @@ VOLUME ["/openrunlog"]
 WORKDIR /openrunlog
 
 ENV ORL_DB_NAME openrunlog
-# ENV ORL_DB_URI 
+# ENV ORL_DB_URI
 ENV ORL_DEBUG True
 ENV ORL_COOKIE_SECRET insertyourrandomstringhere
 

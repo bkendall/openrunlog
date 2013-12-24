@@ -12,5 +12,3 @@ RUN mkdir -p /data/db
 
 EXPOSE 27017
 ENTRYPOINT ["mongodb-linux-x86_64-2.4.8/bin/mongod", "--smallfiles"]
-
-
