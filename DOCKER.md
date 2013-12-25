@@ -22,7 +22,7 @@ You then have an environment set up with `docker` and you can continue with the 
 The following set of commands will get you up and running with Docker using your local repository as the source for the server running. This means any changes you make locally are seen by the `orl-server` image and the server updates appropriately.
 
     sudo make docker-all
-    sudo create-all
+    sudo make create-all
 
 Once you've created the image once, you will not need to re-create them. You can then use the following to start/stop the server containers:
 
