@@ -261,7 +261,7 @@ class User(mongoengine.Document):
                 'start': '1 step forward',
                 'end': '1 step back'
             }
-        elif len(runs) == 1 and runs[0].date.strftime("%m/%d/%Y") != today.strftime("%m/%d/%Y"):
+        elif len(runs) == 1 and runs[0].date != today:
             longest = {
                 'length': 1,
                 'start': runs[len(runs)-1].date.strftime("%m/%d/%Y"),
@@ -292,7 +292,7 @@ class User(mongoengine.Document):
             }
 
         current_streak = 1
-        if len(runs) == 0 or relativedelta(runs[len(runs)-1].date, today).days < -1:
+        if len(runs) == 0 or (runs[len(runs)-1].date != today and runs[len(runs)-1].date != today - relativedelta(days=1)):
             current = {
                 'length': 0,
                 'start': 'Couch',

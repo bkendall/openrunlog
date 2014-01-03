@@ -24,6 +24,60 @@ class TimeTests(unittest.TestCase):
 
 
 class StreakTests(unittest.TestCase):
+    def test_current_streak_ends_today(self):
+        today = datetime.date.today()
+        d1 = today - relativedelta(days=1)
+        d2 = today - relativedelta(days=2)
+        runs = [
+            models.Run(date=d2, distance=4),
+            models.Run(date=d1, distance=4),
+            models.Run(date=today, distance=4),
+        ]
+
+        streaks = models.User._calculate_streaks(runs)
+
+        expected_streaks = {
+            'longest': {
+                'length': 3,
+                'start': d2.strftime("%m/%d/%Y"),
+                'end': today.strftime("%m/%d/%Y")
+            },
+            'current': {
+                'length': 3,
+                'start': d2.strftime("%m/%d/%Y"),
+                'end': today.strftime("%m/%d/%Y")
+            }
+        }
+
+        self.assertEqual(streaks, expected_streaks)
+
+    def test_current_streak_ends_yesterday(self):
+        yesterday = datetime.date.today() - relativedelta(days=1)
+        d1 = yesterday - relativedelta(days=1)
+        d2 = yesterday - relativedelta(days=2)
+        runs = [
+            models.Run(date=d2, distance=4),
+            models.Run(date=d1, distance=4),
+            models.Run(date=yesterday, distance=4),
+        ]
+
+        streaks = models.User._calculate_streaks(runs)
+
+        expected_streaks = {
+            'longest': {
+                'length': 3,
+                'start': d2.strftime("%m/%d/%Y"),
+                'end': yesterday.strftime("%m/%d/%Y")
+            },
+            'current': {
+                'length': 3,
+                'start': d2.strftime("%m/%d/%Y"),
+                'end': yesterday.strftime("%m/%d/%Y")
+            }
+        }
+
+        self.assertEqual(streaks, expected_streaks)
+
     def test_multiday_streak_longest(self):
         runs = [
             models.Run(date=datetime.datetime(2013, 2, 1, 0, 0), distance=4),
